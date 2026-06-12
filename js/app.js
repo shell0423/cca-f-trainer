@@ -151,6 +151,7 @@
       '<li>間違えた問題は自動で「復習」に溜まります。合格の近道は復習タブを空にすることです。</li>' +
       '</ul>' +
       '<p class="muted">進捗はこのブラウザに保存されます（端末・ブラウザを変えるとリセットされます）。</p>' +
+      '<p><a class="btn btn-sm" href="#/guide">📘 詳しい使い方ガイド</a> <a class="btn btn-sm" href="#/changelog">🗒 変更履歴</a></p>' +
       '</div>';
   }
 
@@ -617,6 +618,30 @@
     });
   }
 
+  function viewGuide() {
+    var md = (C.docs && C.docs.guide) || '使い方ガイドを読み込み中です…';
+    return '<div class="page-head"><a class="back" href="#/">← ホーム</a></div>' +
+      '<article class="lesson-body">' + mdToHtml(md) + '</article>' +
+      '<div class="lesson-foot"><a class="btn" href="#/changelog">変更履歴を見る →</a>' +
+      '<a class="btn btn-primary" href="#/plan">12週プランを見る</a></div>';
+  }
+
+  function viewChangelog() {
+    var log = (C.docs && C.docs.changelog) || [];
+    var body = log.map(function (v) {
+      var items = (v.items || []).map(function (it) { return '<li>' + esc(it) + '</li>'; }).join('');
+      return '<div class="card changelog-card">' +
+        '<div class="cl-head"><span class="cl-ver">v' + esc(v.version) + '</span>' +
+        '<span class="cl-title">' + esc(v.title || '') + '</span>' +
+        '<span class="cl-date">' + esc(v.date || '') + '</span></div>' +
+        '<ul class="cl-items">' + items + '</ul></div>';
+    }).join('');
+    return '<div class="page-head"><a class="back" href="#/">← ホーム</a><h1>変更履歴</h1>' +
+      '<p class="muted">このサイトの更新内容です。新しいものが上に並びます。</p></div>' +
+      (body || '<div class="card">変更履歴を読み込み中です…</div>') +
+      '<div class="lesson-foot"><a class="btn" href="#/guide">← 使い方ガイド</a></div>';
+  }
+
   function notFound() {
     return '<div class="page-head"><a class="back" href="#/">← ホーム</a><h1>ページが見つかりません</h1></div>' +
       '<div class="card">データの読み込み中かもしれません。少し待ってから再読み込みしてください。</div>';
@@ -641,7 +666,8 @@
     if (route === 'quiz') { startQuiz(parts.slice(1).join('/')); afterRender(route); return; }
 
     var html;
-    if (!dataReady() && route !== '') {
+    var noDataNeeded = route === 'guide' || route === 'changelog';
+    if (!dataReady() && route !== '' && !noDataNeeded) {
       html = dataLoadingNotice();
     } else if (route === '' ) {
       html = dataReady() ? viewHome() : (dataLoadingNotice() + viewHome());
@@ -650,6 +676,8 @@
     else if (route === 'lesson') html = viewLesson(parts[1]);
     else if (route === 'review') html = viewReview();
     else if (route === 'vocab') html = viewVocab();
+    else if (route === 'guide') html = viewGuide();
+    else if (route === 'changelog') html = viewChangelog();
     else html = notFound();
 
     $app.innerHTML = html;

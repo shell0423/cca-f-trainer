@@ -15,6 +15,7 @@
     lessons: {},          // id -> lesson
     questions: {},        // id -> question
     exams: {},            // id -> exam
+    docs: {},             // {guide:markdown, changelog:[{version,date,title,items}]}
   };
 
   function upsert(map, obj) {
@@ -26,6 +27,7 @@
     config: function (c) { Object.assign(CCA.config, c || {}); },
     domainMeta: function (list) { if (Array.isArray(list)) CCA.domains = list; },
     plan: function (p) { if (Array.isArray(p)) CCA.plan = p; },
+    docs: function (d) { Object.assign(CCA.docs, d || {}); },
     lesson: function (l) { upsert(CCA.lessons, l); },
     question: function (q) { upsert(CCA.questions, q); },
     exam: function (e) { upsert(CCA.exams, e); },

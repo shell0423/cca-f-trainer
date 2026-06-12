@@ -23,13 +23,15 @@ function run(rel) {
 
 console.log('\n=== ブラウザ読み込みシミュレーション ===\n');
 run('js/registry.js');
-['js/data/curriculum.js', 'js/data/d1.js', 'js/data/d2.js', 'js/data/d3.js',
+['js/data/curriculum.js', 'js/data/docs.js', 'js/data/d1.js', 'js/data/d2.js', 'js/data/d3.js',
  'js/data/d4.js', 'js/data/d5.js', 'js/data/mock-1.js', 'js/data/mock-2.js'].forEach(run);
 
 const C = sandbox.CCA;
 ok(!!C, 'window.CCA が構築された');
 ok(C.domains.length === 5, 'ドメイン数 = 5 (' + C.domains.length + ')');
 ok(C.plan.length === 12, '12週プラン (' + C.plan.length + ')');
+ok(C.docs && typeof C.docs.guide === 'string' && C.docs.guide.length > 200, '使い方ガイドが存在');
+ok(C.docs && Array.isArray(C.docs.changelog) && C.docs.changelog.length >= 1, '変更履歴が存在 (' + (C.docs.changelog || []).length + '件)');
 ok(Object.keys(C.lessons).length === 21, 'レッスン数 = 21 (' + Object.keys(C.lessons).length + ')');
 ok(Object.keys(C.questions).length === 300, '問題数 = 300 (' + Object.keys(C.questions).length + ')');
 ok(Object.keys(C.exams).length === 7, '試験数 = 7 (' + Object.keys(C.exams).length + ')');
