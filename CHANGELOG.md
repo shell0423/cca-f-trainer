@@ -3,6 +3,10 @@
 このファイルはサイトの更新内容を記録します。新しいものほど上にあります。
 形式は [Keep a Changelog](https://keepachangelog.com/ja/) に準じ、日付は YYYY-MM-DD です。
 
+## [1.0.2] - 2026-06-12
+### 変更
+- ナビゲーションバーに「変更履歴」へのリンクを追加（どの画面からもすぐ開ける）。
+
 ## [1.0.1] - 2026-06-12
 ### 追加
 - アプリ内に「使い方ガイド」ページを追加（`#/guide`）。
@@ -28,5 +32,6 @@
 - 全問の解説を「内容参照」に統一し、出題時に選択肢順をシャッフル（正解位置の偏りを解消）。
 - 教材・問題を並列エージェントで生成→技術校閲。`tools/validate.js` と `tools/smoketest.js` でエラー0を確認。
 
+[1.0.2]: https://github.com/shell0423/cca-f-trainer
 [1.0.1]: https://github.com/shell0423/cca-f-trainer
 [1.0.0]: https://github.com/shell0423/cca-f-trainer
