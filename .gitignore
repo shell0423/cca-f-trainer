@@ -1,0 +1,6 @@
+# 中間生成物・ローカル専用
+tools/backup/
+tools/exp/
+node_modules/
+.DS_Store
+*.log
